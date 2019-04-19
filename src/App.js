@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
+import MovieRow from './MovieRow.js'
 
 class App extends Component {
   
@@ -23,20 +24,7 @@ class App extends Component {
     movies.forEach((movie) => {
       console.log(movie.title)
 
-      const movieRow = 
-      <table key={movie.id}>
-        <tbody>
-          <tr>
-            <td>
-              <img alt="poster" width="120" src={movie.poster_src}></img>
-            </td>
-            <td>
-              {movie.title}
-              <p>{movie.overview}</p>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      const movieRow = <MovieRow movie={movie}/> //IMPORTATN: we pass the "{movie}" objects to the MovieRow.js by writing: movie={movie}. And we access it in the MovieRow.js by accessing it's properti "movie={}"
 
       movieRows.push(movieRow) //pushing the p tag (for each id) into "movieRows"
     })
@@ -101,7 +89,7 @@ class App extends Component {
 
 export default App;
 
-{/* 
+/* 
 //Moved all of this to App.css to make the coed clean and we call it by using: <table className="titleBar"> 
  
   <table style={{
@@ -111,4 +99,4 @@ export default App;
         //fontSize: 24 //Change font change
         paddingLeft: 16, //Adds padding to the everything in the table (push to right by 16)
       }}>  
-*/}
+*/
