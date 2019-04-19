@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import MovieRow from './MovieRow.js'
+import $ from 'jquery' //$ represent jquery's library. And when we do our search, we can use $.XXXX
 
 class App extends Component {
   
@@ -9,6 +10,10 @@ class App extends Component {
     super(props)
     console.log("This is my initializer")
 
+    this.state={}
+
+
+/*   
     //Created a constat called movies, that has objects identified with {}
     //This is where the movie blocks with their info will go.
     const movies=[
@@ -26,7 +31,7 @@ class App extends Component {
 
       const movieRow = <MovieRow movie={movie}/> //IMPORTATN: we pass the "{movie}" objects to the MovieRow.js by writing: movie={movie}. And we access it in the MovieRow.js by accessing it's properti "movie={}"
 
-      movieRows.push(movieRow) //pushing the p tag (for each id) into "movieRows"
+      movieRows.push(movieRow) //pushing the p tag (for each id) into "movieRows"     
     })
 
 
@@ -35,7 +40,52 @@ class App extends Component {
     //choose, rows, kos, etc... as long as in render we use the same {this.state.XXXXX}
     this.state = {rows: movieRows}
 
+*/
+
+
+    this.performSearch()
+
   }//Close construct(props){} 
+
+
+
+
+
+  performSearch(){
+    console.log("Perform search using movieDB")
+
+    const urlString = "https://api.themoviedb.org/3/search/movie?query=marvel&api_key=3c23612da904596d950ba31b9f4f545a"
+   
+    $.ajax({
+      url: urlString,
+
+      success: (searchResults) => {
+        console.log("Fetched data successfully")
+        //console.log(searchResults)
+        //console.log(results[0])
+
+        const results = searchResults.results
+
+        var movieRows = []
+
+        results.forEach((movie) => {
+          movie.poster_src = "https://image.tmdb.org/t/p/w185" + movie.poster_path //I added the neccessary url to the "poster_path" url to get the poster. So we manually constructed the poster path and we set it to the "movie" object directly and we pass the movie in as we did before. 
+          //console.log(movie.poster_path)
+          const movieRow = <MovieRow key={movie.id} movie={movie}/>
+          movieRows.push(movieRow)
+        })
+        //this.state = {rows: movieRows} //??? why can't I use =, and why setState now??
+        this.setState({rows: movieRows})
+      },
+
+      error: (xhr, status, err) => {
+        console.error("Failed to fetch data")
+      }
+
+
+    })
+
+  }
 
 
 
