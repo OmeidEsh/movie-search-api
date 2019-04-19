@@ -11,18 +11,9 @@ class App extends Component {
     //Created a constat called movies, that has objects identified with {}
     //This is where the movie blocks with their info will go.
     const movies=[
-      {id: 0, title: "Avengers: Infinity War", overview: "laksjnlaknslkdalksdlkajsdkjaslkdjalksjdlkjasd"},
-      {id: 1, title: "KOOOOOS", overview: "11123123123123123123123123"},
+      {id: 0, poster_src: "https://image.tmdb.org/t/p/w185_and_h278_bestv2/7WsyChQLEftFiDOVTGkv3hFpyyt.jpg", title: "Avengers: Infinity War", overview: "laksjnlaknslkdalksdlkajsdkjaslkdjalksjdlkjasd"},
+      {id: 1, poster_src: "https://image.tmdb.org/t/p/w185_and_h278_bestv2/5damnMcRFKSjhCirgX3CMa88MBj.jpg", title: "Cars", overview: "11123123123123123123123123"},
     ]
-
-    //For now, I defied the "rows" that we render in the bottom with these three <p>.
-    this.state={rows: [
-      <p key="1">This is my ROOOOOOW1</p>,
-      <p key="2">This is my ROOOOOOW2</p>,
-      <p key="3">This is my ROOOOOOW3</p>
-    ]}
-
-
 
 
     //Create a variable for pushing the movie info in the for loop below. 
@@ -30,31 +21,30 @@ class App extends Component {
 
     //For loop calling the "movies" constatnt:
     movies.forEach((movie) => {
-
-
       console.log(movie.title)
 
-
-      const movieRow = <table>
+      const movieRow = 
+      <table key={movie.id}>
         <tbody>
           <tr>
             <td>
-              <img src=""></img>
+              <img alt="poster" width="120" src={movie.poster_src}></img>
             </td>
             <td>
               {movie.title}
+              <p>{movie.overview}</p>
             </td>
           </tr>
         </tbody>
       </table>
 
-
-      movieRows.push(<p key={movie.id}> movie title: {movie.title} </p>) //pushing the p tag (for each id) into "movieRows"
+      movieRows.push(movieRow) //pushing the p tag (for each id) into "movieRows"
     })
 
 
 
-    //Now that we've pushed everything into "movieRows", we set it to "rows" that we are rendering below. 
+    //Now that we've pushed everything into "movieRows", we set it to "rows" that we are rendering below. Doesn't matter what we 
+    //choose, rows, kos, etc... as long as in render we use the same {this.state.XXXXX}
     this.state = {rows: movieRows}
 
   }//Close construct(props){} 
@@ -65,7 +55,7 @@ class App extends Component {
 
   render() {
     return (
-    <div className="App"> 
+    <div> 
       
 
       <table className="titleBar"> 
