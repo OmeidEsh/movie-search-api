@@ -43,7 +43,7 @@ class App extends Component {
 */
 
 
-    this.performSearch()
+    this.performSearch("avengers")
 
   }//Close construct(props){} 
 
@@ -51,10 +51,10 @@ class App extends Component {
 
 
 
-  performSearch(){
+  performSearch(searchTerm){
     console.log("Perform search using movieDB")
 
-    const urlString = "https://api.themoviedb.org/3/search/movie?query=marvel&api_key=3c23612da904596d950ba31b9f4f545a"
+    const urlString = "https://api.themoviedb.org/3/search/movie?api_key=3c23612da904596d950ba31b9f4f545a&query=" + searchTerm
    
     $.ajax({
       url: urlString,
@@ -73,6 +73,7 @@ class App extends Component {
           //console.log(movie.poster_path)
           const movieRow = <MovieRow key={movie.id} movie={movie}/>
           movieRows.push(movieRow)
+          //console.log(movieRows)
         })
         //this.state = {rows: movieRows} //??? why can't I use =, and why setState now??
         this.setState({rows: movieRows})
@@ -85,6 +86,17 @@ class App extends Component {
 
     })
 
+  }
+
+
+
+
+
+  searchChangeHandle(event){
+    //console.log(event.target.value) //Able to type in the search bar "<input>" and see it in the console. 
+    const boundObject = this //we can do this becase in <input> we used "this.searchChangeHandle.bind(this)" bind(this).
+    const searchTerm = event.target.value
+    boundObject.performSearch(searchTerm)
   }
 
 
@@ -123,7 +135,8 @@ class App extends Component {
         paddingBottom: 8, //Pad the bottom by 8 for the text
         paddingLeft: 16, //Pad the left by 16 for the text
         }} 
-        placeholder=" SEARCH ME">   
+        onChange = {this.searchChangeHandle.bind(this)} //The way we can listen to changes inside the input, is to use "onChange" //bind(this) will bind the current app.js file/class to the value of "this" inside "searchChangeHandle" functions. 
+        placeholder = "SEARCH ME">   
       </input>
 
 
